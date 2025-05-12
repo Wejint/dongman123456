@@ -1,0 +1,399 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>视频平台</title>-->
+<!--    &lt;!&ndash; 引入 Vue 3 &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>-->
+<!--    &lt;!&ndash; 引入 Axios &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--            background-color: #f5f5f5;-->
+<!--        }-->
+<!--        .container {-->
+<!--            max-width: 800px;-->
+<!--            margin: 0 auto;-->
+<!--            background: white;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            color: #333;-->
+<!--        }-->
+<!--        button {-->
+<!--            padding: 10px 15px;-->
+<!--            background: #4CAF50;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 4px;-->
+<!--            cursor: pointer;-->
+<!--            margin: 5px;-->
+<!--        }-->
+<!--        button:hover {-->
+<!--            background: #45a049;-->
+<!--        }-->
+<!--        video {-->
+<!--            width: 100%;-->
+<!--            max-width: 600px;-->
+<!--            display: block;-->
+<!--            margin: 20px auto;-->
+<!--        }-->
+<!--        input[type="file"] {-->
+<!--            margin: 10px 0;-->
+<!--        }-->
+<!--        .modal {-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.5);-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .modal-content {-->
+<!--            background: white;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 8px;-->
+<!--            width: 80%;-->
+<!--            max-width: 500px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="app">-->
+<!--    &lt;!&ndash; 主界面 &ndash;&gt;-->
+<!--    <div class="container" v-if="currentPage === 'home'">-->
+<!--        <h1>视频平台</h1>-->
+<!--        <button @click="goToPage('watch')">观看视频</button>-->
+<!--        <button @click="goToPage('upload')">上传视频</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 视频播放页 &ndash;&gt;-->
+<!--    <div class="container" v-if="currentPage === 'watch'">-->
+<!--        <h1>视频播放</h1>-->
+<!--        <video controls>-->
+<!--            <source :src="currentVideo" type="video/mp4">-->
+<!--            您的浏览器不支持视频播放-->
+<!--        </video>-->
+<!--        <button @click="goToPage('home')">返回首页</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 视频上传页 &ndash;&gt;-->
+<!--    <div class="container" v-if="currentPage === 'upload'">-->
+<!--        <h1>视频上传</h1>-->
+<!--        <form @submit.prevent="uploadVideo">-->
+<!--            <input type="file" ref="videoFile" accept="video/*" required>-->
+<!--            <button type="submit">上传</button>-->
+<!--        </form>-->
+<!--        <button @click="goToPage('home')">返回首页</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 上传成功弹窗 &ndash;&gt;-->
+<!--    <div class="modal" v-if="showUploadSuccess">-->
+<!--        <div class="modal-content">-->
+<!--            <h3>上传成功！</h3>-->
+<!--            <p>视频已成功上传至服务器。</p>-->
+<!--            <button @click="showUploadSuccess = false">确定</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const { createApp } = Vue;-->
+
+<!--    const app = createApp({-->
+<!--        data() {-->
+<!--            return {-->
+<!--                currentPage: 'home', // 当前页面：home / watch / upload-->
+<!--                currentVideo: '/static/videos/sample.mp4', // 默认播放的视频-->
+<!--                showUploadSuccess: false // 是否显示上传成功弹窗-->
+<!--            };-->
+<!--        },-->
+<!--        methods: {-->
+<!--            // 跳转页面-->
+<!--            goToPage(page) {-->
+<!--                this.currentPage = page;-->
+<!--            },-->
+<!--            // 上传视频（模拟）-->
+<!--            uploadVideo() {-->
+<!--                const file = this.$refs.videoFile.files[0];-->
+<!--                if (!file) {-->
+<!--                    alert('请选择视频文件！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 模拟上传到服务器（实际应使用 axios）-->
+<!--                const formData = new FormData();-->
+<!--                formData.append('video', file);-->
+
+<!--                // 这里替换为你的上传 API-->
+<!--                axios.post('http://localhost:8080/upload', formData, {-->
+<!--                    headers: {-->
+<!--                        'Content-Type': 'multipart/form-data'-->
+<!--                    }-->
+<!--                }).then(response => {-->
+<!--                    this.showUploadSuccess = true;-->
+<!--                    console.log('上传成功:', response.data);-->
+<!--                }).catch(error => {-->
+<!--                    console.error('上传失败:', error);-->
+<!--                    alert('上传失败，请重试！');-->
+<!--                });-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+
+<!--    app.mount('#app');-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频平台 - OSS上传</title>
+    <!-- 引入 Vue 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <!-- 引入 Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            padding: 10px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 20px auto;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            display: block;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+        .mt-3 {
+            margin-top: 15px;
+        }
+        #callback-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .btn-primary {
+            background: #007bff;
+        }
+        .btn-primary:hover {
+            background: #0069d9;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 主界面 -->
+    <div class="container" v-if="currentPage === 'home'">
+        <h1>视频平台</h1>
+        <button @click="goToPage('watch')">观看视频</button>
+        <button @click="goToPage('upload')">上传视频</button>
+
+    </div>
+
+    <!-- 视频播放页 -->
+    <div class="container" v-if="currentPage === 'watch'">
+        <h1>视频播放</h1>
+        <video controls>
+            <source :src="currentVideo" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <button @click="goToPage('home')">返回首页</button>
+    </div>
+
+    <!-- 视频上传页 -->
+    <div class="container" v-if="currentPage === 'upload'">
+        <h1>视频上传</h1>
+        <form @submit.prevent="uploadVideo">
+            <input type="file" ref="videoFile" accept="video/*" required>
+            <button type="submit" class="btn-primary">上传</button>
+        </form>
+        <button @click="goToPage('home')">返回首页</button>
+    </div>
+
+
+
+    <!-- 上传成功弹窗 -->
+    <div class="modal" v-if="showUploadSuccess">
+        <div class="modal-content">
+            <h3>上传成功！</h3>
+            <p>{{ uploadSuccessMessage }}</p>
+            <button @click="showUploadSuccess = false">确定</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    const app = createApp({
+        data() {
+            return {
+                currentPage: 'home', // 当前页面：home / watch / upload / oss-upload
+                currentVideo: '/static/videos/sample.mp4', // 默认播放的视频
+                showUploadSuccess: false, // 是否显示上传成功弹窗
+                uploadSuccessMessage: '', // 上传成功消息
+                showCallbackInfo: false, // 是否显示回调信息
+                callbackContent: '' // 回调信息内容
+            };
+        },
+        methods: {
+            // 跳转页面
+            goToPage(page) {
+                this.currentPage = page;
+                this.showCallbackInfo = false;
+            },
+
+            // 上传视频（模拟）
+            uploadVideo() {
+                const file = this.$refs.ossFile.files[0];
+                if (!file) {
+                    alert('请选择一个文件再上传。');
+                    return;
+                }
+
+                // 获取OSS上传签名
+                axios.get("/get_post_signature_for_oss_upload")
+                    .then((response) => {
+                        if (response.status !== 200) {
+                            throw new Error("获取签名失败");
+                        }
+                        return response.data;
+                    })
+                    .then((data) => {
+                        let formData = new FormData();
+                        formData.append("success_action_status", "200");
+                        formData.append("policy", data.policy);
+                        formData.append("x-oss-signature", data.signature);
+                        formData.append("x-oss-signature-version", "OSS4-HMAC-SHA256");
+                        formData.append("x-oss-credential", data.x_oss_credential);
+                        formData.append("x-oss-date", data.x_oss_date);
+                        formData.append("key", data.dir + file.name); // 文件名
+                        formData.append("x-oss-security-token", data.security_token);
+                        formData.append("callback", data.callback);  // 添加回调参数
+                        formData.append("file", file); // file 必须为最后一个表单域
+
+                        return axios.post(data.host, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+                    })
+                    .then((response) => {
+                        if (response.status === 200) {
+                            this.uploadSuccessMessage = '文件已成功上传至OSS。';
+                            this.showUploadSuccess = true;
+                            console.log("上传成功", response.data);
+                            return response.data;
+                        } else {
+                            console.log("上传失败", response);
+                            throw new Error("上传失败，请稍后再试");
+                        }
+                    })
+                    .then((callbackData) => {
+                        if (callbackData) {
+                            this.callbackContent = JSON.stringify(callbackData, null, 2);
+                            this.showCallbackInfo = true;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("发生错误:", error);
+                        alert(error.message);
+                    });
+            }
+            },
+
+
+
+
+
+    });
+
+    app.mount('#app');
+</script>
+</body>
+</html>
