@@ -24,7 +24,7 @@ public class VideoServiceImpl implements VideoService {
     String region = "cn-beijing";
     String host = "http://video-bucket-wejint.oss-cn-beijing.aliyuncs.com";
     // 设置上传回调URL（即回调服务器地址），必须为公网地址。用于处理应用服务器与OSS之间的通信，OSS会在文件上传完成后，把文件上传信息通过此回调URL发送给应用服务器。
-    String callbackUrl = "http://172.16.11.44:8081/callback"; // 设置回调请求的服务器地址，例如http://oss-demo.aliyuncs.com:23450/callback。
+    String callbackUrl = "http://60.205.130.226:8081/callback"; // 设置回调请求的服务器地址，例如http://oss-demo.aliyuncs.com:23450/callback。
     //限定上传到OSS的文件前缀。
     String upload_dir = "video";
 

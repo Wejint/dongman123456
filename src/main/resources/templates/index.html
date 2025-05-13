@@ -323,6 +323,7 @@
         },
         methods: {
             // 跳转页面
+
             goToPage(page) {
                 this.currentPage = page;
                 this.showCallbackInfo = false;
@@ -330,14 +331,14 @@
 
             // 上传视频（模拟）
             uploadVideo() {
-                const file = this.$refs.ossFile.files[0];
+                const file = this.$refs.videoFile.files[0];
                 if (!file) {
                     alert('请选择一个文件再上传。');
                     return;
                 }
 
                 // 获取OSS上传签名
-                axios.get("/get_post_signature_for_oss_upload")
+                axios.get("/video/get_post_signature_for_oss_upload")
                     .then((response) => {
                         if (response.status !== 200) {
                             throw new Error("获取签名失败");
