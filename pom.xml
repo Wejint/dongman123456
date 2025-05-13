@@ -85,7 +85,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.wejint.video.VideoApplication</mainClass>
-                    <skip>true</skip>
+
                 </configuration>
                 <executions>
                     <execution>
