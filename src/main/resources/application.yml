@@ -6,3 +6,7 @@ spring:
 server:
   address: 0.0.0.0
   port: 8081
+video:
+  storage:
+    location: D:/projects/video/video/src/main/resources/static/videos/  # Linux服务器路径（确保有写入权限）
+    # 或 Windows路径示例：D:/videos/
